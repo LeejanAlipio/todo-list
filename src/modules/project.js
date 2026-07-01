@@ -1,5 +1,9 @@
 import Todo from "./todo.js";
 
+const projectList = [];
+
+const getProjectList = () => [...projectList];
+
 export default class Project {
   constructor(name, description = '') {
     this.name = name;
