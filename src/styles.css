@@ -22,7 +22,8 @@ button {
   cursor: pointer;
 }
 
-dialog {
+.task-dialog,
+.project-dialog {
   margin: auto;
   padding: 20px;
   border: none;
@@ -31,7 +32,8 @@ dialog {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
-dialog::backdrop {
+.task-dialog::backdrop,
+.project-dialog::backdrop {
   background: rgba(17, 24, 39, 0.55);
 }
 
@@ -100,7 +102,7 @@ textarea {
 
 main {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 300px 1fr;
   min-height: calc(100vh - 62px);
 }
 
@@ -131,7 +133,7 @@ main {
   color: #374151;
 }
 
-#add-project-btn {
+.add-project-btn {
   background: #0f766e;
   color: white;
   border: none;
@@ -144,6 +146,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  list-style-type: none;
 }
 
 .project-btn {
@@ -230,96 +233,21 @@ main {
   gap: 12px;
 }
 
-.task-card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+.project-item {
+  padding: 10px;
 }
 
-.task-card.completed {
-  opacity: 0.75;
+.project-name-btn {
+  all: unset;
+  cursor: pointer;
+  text-align: start;
+  width: 100%;
 }
 
-.task-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.checkbox-label {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  text-transform: none;
-  color: #111827;
-  font-weight: 600;
-}
-
-.checkbox-label input {
-  width: auto;
-  margin-top: 3px;
-}
-
-.task-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.icon-btn {
-  border: none;
-  border-radius: 999px;
-  padding: 6px 10px;
-  background: #f3f4f6;
-  color: #374151;
-}
-
-.task-description {
-  margin: 10px 0 8px;
-  color: #6b7280;
-}
-
-.task-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.priority-pill,
-.due-pill,
-.project-pill {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  padding: 5px 10px;
-  font-size: 0.8rem;
-  text-transform: capitalize;
-  background: #f3f4f6;
-  color: #374151;
-}
-
-.priority-pill.high {
-  background: #fef2f2;
-  color: #b91c1c;
-}
-
-.priority-pill.medium {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.priority-pill.low {
-  background: #ecfdf5;
-  color: #047857;
-}
-
-.empty-state {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-  color: #6b7280;
+.active {
+  background-color: #047857;
+  color: white;
+  border-radius: 8px;
 }
 
 @media (max-width: 860px) {
