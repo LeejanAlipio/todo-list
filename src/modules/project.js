@@ -2,7 +2,18 @@ import Todo from "./todo.js";
 
 const projectList = [];
 
-const getProjectList = () => [...projectList];
+export const getProjectList = () => [...projectList];
+
+export const createDefaultProject = () => {
+  if (projectList.length === 0) {
+    const defaultProject = new Project("Default", "Default Project")
+    projectList.push(defaultProject);
+  }
+}
+
+export const addProject = (project) => {
+  projectList.push(project);
+}
 
 export default class Project {
   constructor(name, description = '') {
@@ -21,5 +32,9 @@ export default class Project {
     if (todoIndex !== -1) {
       this.projectTasks.splice(todoIndex, 1);
     }
+  }
+
+  getProjectTasks() {
+    return [...this.projectTasks];
   }
 }
