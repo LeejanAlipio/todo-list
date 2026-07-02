@@ -2,6 +2,12 @@
 
 A simple task management app built with vanilla JavaScript and Webpack as part of The Odin Project curriculum. It lets you create projects, add tasks, edit them, mark them complete, and track task progress in a clean dashboard.
 
+![Todo List app screenshot](image.png)
+
+## Live Preview
+
+Visit the app here: https://todo-list-omega-lemon.vercel.app/
+
 ## Features
 
 - Create and switch between projects
