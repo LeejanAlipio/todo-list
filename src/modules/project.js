@@ -6,7 +6,8 @@ export const getProjectList = () => [...projectList];
 
 export const createDefaultProject = () => {
   if (projectList.length === 0) {
-    const defaultProject = new Project("Default", "Default Project")
+    const defaultProject = new Project("Default", "Default Project");
+    defaultProject.addTodo('Heavenly')
     projectList.push(defaultProject);
   }
 }
