@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OdinTask</title>
+  </head>
+  <body>
+    <dialog class="task-dialog">
+      <form id="task-form">
+        <label for="title">TITLE <input type="text" id="title" required /></label>
+        <label for="description">DESCRIPTION <textarea name="description" id="description" rows="4"></textarea></label>
+        <label for="due-date">DUE DATE <input type="date" id="due-date" /></label>
+        <label for="priority">PRIORITY
+          <select name="priority" id="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+        <div class="btn-container">
+          <button class="btn cancel-btn" type="button">Cancel</button>
+          <button class="btn save-btn" type="submit">Save Task</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="project-dialog">
+      <form id="project-form">
+        <label for="project-name">PROJECT NAME <input type="text" id="project-name" required /></label>
+        <label for="project-description">DESCRIPTION <textarea id="project-description" rows="4"></textarea></label>
+        <div class="btn-container">
+          <button class="btn cancel-btn" type="button">Cancel</button>
+          <button class="btn save-btn" type="submit">Save Project</button>
+        </div>
+      </form>
+    </dialog>
+
+    <h1 class="header">OdinTask</h1>
+    <main>
+      <aside class="sidebar">
+        <h3>Task Manager</h3>
+        <div class="projects">
+          <div class="projects-header">
+            <p>Projects</p>
+            <button class="add-project-btn" type="button">Add</button>
+          </div>
+          <ul id="project-list">
+
+          </ul>
+        </div>
+      </aside>
+      <article class="content">
+        <div class="content-header">
+          <div class="left-header">
+            <h2>All Tasks</h2>
+            <p>You have <span class="task-number">0</span> tasks to complete</p>
+          </div>
+          <button class="add-task-btn" type="button">&plus; Add Task</button>
+        </div>
+        <div class="content-dashboard">
+          <div class="status">
+            <p>COMPLETED</p>
+            <p class="completed-number">0</p>
+          </div>
+          <div class="status">
+            <p>IN PROGRESS</p>
+            <p class="in-progress-number">0</p>
+          </div>
+        </div>
+        <div class="content-tasks">
+
+        </div>
+      </article>
+    </main>
+  </body>
+</html>
