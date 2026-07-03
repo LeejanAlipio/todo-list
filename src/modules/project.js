@@ -28,20 +28,28 @@ export const loadProjects = () => {
 
   try {
     const data = JSON.parse(raw);
-    data.forEach(projectData => {
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return false;
+    }
+
+    data.forEach((projectData) => {
       const project = new Project(projectData.name, projectData.description);
-      projectData.projectTasks?.forEach(taskData => {
-        project.projectTasks.push(new Todo(
-          taskData.title,
-          taskData.description,
-          taskData.dueDate,
-          taskData.priority,
-          taskData.status,
-          taskData.id,
-        ));
+      projectData.projectTasks?.forEach((taskData) => {
+        project.projectTasks.push(
+          new Todo(
+            taskData.title,
+            taskData.description,
+            taskData.dueDate,
+            taskData.priority,
+            taskData.status,
+            taskData.id,
+          ),
+        );
       });
       projectList.push(project);
     });
+
     return true;
   } catch {
     return false;
