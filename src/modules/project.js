@@ -51,7 +51,6 @@ export const loadProjects = () => {
 export const createDefaultProject = () => {
   if (projectList.length === 0) {
     const defaultProject = new Project("Default", "Default Project");
-    defaultProject.addTodo('Heavenly')
     projectList.push(defaultProject);
   }
 }
