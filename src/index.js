@@ -167,7 +167,7 @@ renderTasks();
 const updateStats = () => {
   const projectTasks = getActiveProject().getProjectTasks();
 
-  uiElements.taskNumber.textContent = projectTasks.filter(task => !task.status).length;
+  uiElements.taskNumber.textContent = projectTasks.length;
   uiElements.completedNumber.textContent = projectTasks.filter(task => task.status).length;
   uiElements.inProgressNumber.textContent = projectTasks.filter(task => !task.status).length;
 }
