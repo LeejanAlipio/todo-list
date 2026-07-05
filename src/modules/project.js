@@ -61,11 +61,11 @@ export const createDefaultProject = () => {
     const defaultProject = new Project("Default", "Default Project");
     projectList.push(defaultProject);
   }
-}
+};
 
 export const addProject = (project) => {
   projectList.push(project);
-}
+};
 
 export default class Project {
   constructor(name, description = '') {
@@ -75,7 +75,7 @@ export default class Project {
   }
 
   addTodo(name, description, dueDate, priority, status) {
-    const newTodo = new Todo(name, description, dueDate, priority, status)
+    const newTodo = new Todo(name, description, dueDate, priority, status);
     this.projectTasks.push(newTodo);
   }
 

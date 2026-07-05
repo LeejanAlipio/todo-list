@@ -8,7 +8,7 @@ if (!loadProjects()) {
 const state = {
   activeProject: null,
   taskBeingEdited: null,
-}
+};
 
 const getActiveProject = () => state.activeProject || getProjectList()[0];
 
@@ -17,7 +17,7 @@ const setActiveProject = (project) => {
   renderProjects();
   renderTasks();
   updateStats();
-}
+};
 
 const uiElements = {
   taskDialog: document.querySelector('.task-dialog'),
@@ -35,14 +35,14 @@ const uiElements = {
   completedNumber: document.querySelector('.completed-number'),
   inProgressNumber: document.querySelector('.in-progress-number'),
   contentTasks: document.querySelector('.content-tasks'),
-}
+};
 
 const uiActions = {
   addProjectBtn: document.querySelector('.add-project-btn'),
   addTaskBtn: document.querySelector('.add-task-btn'),
   cancelTaskBtn: document.querySelector('.task-dialog .cancel-btn'),
   cancelProjectBtn: document.querySelector('.project-dialog .cancel-btn'),
-}
+};
 
 const renderProjects = () => {
   uiElements.projectList.innerHTML = '';
@@ -78,24 +78,24 @@ const renderTasks = () => {
   projectTasks.forEach(task => {
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
-    taskCard.classList.toggle('finish-task', task.status)
+    taskCard.classList.toggle('finish-task', task.status);
 
     const taskContainer = document.createElement('div');
-    taskContainer.classList.add('task-container')
+    taskContainer.classList.add('task-container');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = task.status;
-    checkbox.classList.add('checkbox')
+    checkbox.classList.add('checkbox');
     checkbox.addEventListener('change', () => {
       task.toggleStatus();
       saveProjects();
       renderTasks();
       updateStats();
-    })
+    });
 
     const taskInfo = document.createElement('div');
-    taskInfo.classList.add('task-info')
+    taskInfo.classList.add('task-info');
 
     const taskInfoHeader = document.createElement('div');
     taskInfoHeader.classList.add('task-info-header');
@@ -153,9 +153,9 @@ const renderTasks = () => {
       saveProjects();
       renderTasks();
       updateStats();
-    })
+    });
 
-    btnContainer.append(editBtn, delBtn)
+    btnContainer.append(editBtn, delBtn);
 
     taskCard.append(taskContainer, btnContainer);
     uiElements.contentTasks.appendChild(taskCard);
@@ -167,10 +167,10 @@ renderTasks();
 const updateStats = () => {
   const projectTasks = getActiveProject().getProjectTasks();
 
-  uiElements.taskNumber.textContent = projectTasks.length;
+  uiElements.taskNumber.textContent = projectTasks.filter(task => !task.status).length;
   uiElements.completedNumber.textContent = projectTasks.filter(task => task.status).length;
   uiElements.inProgressNumber.textContent = projectTasks.filter(task => !task.status).length;
-}
+};
 
 updateStats();
 
@@ -242,6 +242,6 @@ const bindUiActions = () => {
     uiElements.taskForm.reset();
     uiElements.taskDialog.close();
   });
-}
+};
 
-bindUiActions()
+bindUiActions();
