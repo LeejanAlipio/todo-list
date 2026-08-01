@@ -10,12 +10,12 @@ export const saveProjects = () => {
     name: project.name,
     description: project.description,
     projectTasks: project.projectTasks.map(task => ({
-      id: task.id,
       title: task.title,
       description: task.description,
       dueDate: task.dueDate,
       priority: task.priority,
       status: task.status,
+      id: task.id,
     })),
   }));
 
@@ -36,16 +36,7 @@ export const loadProjects = () => {
     data.forEach((projectData) => {
       const project = new Project(projectData.name, projectData.description);
       projectData.projectTasks?.forEach((taskData) => {
-        project.projectTasks.push(
-          new Todo(
-            taskData.title,
-            taskData.description,
-            taskData.dueDate,
-            taskData.priority,
-            taskData.status,
-            taskData.id,
-          ),
-        );
+        project.addTodo(taskData);
       });
       projectList.push(project);
     });
@@ -74,8 +65,8 @@ export default class Project {
     this.projectTasks = [];
   }
 
-  addTodo(name, description, dueDate, priority, status) {
-    const newTodo = new Todo(name, description, dueDate, priority, status);
+  addTodo(taskData) {
+    const newTodo = new Todo(taskData);
     this.projectTasks.push(newTodo);
   }
 
