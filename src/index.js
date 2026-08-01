@@ -227,13 +227,13 @@ const bindUiActions = () => {
       state.taskBeingEdited.priority = uiElements.taskPriorityInput.value;
       state.taskBeingEdited = null;
     } else {
-      getActiveProject().addTodo(
-        uiElements.taskTitleInput.value.trim(),
-        uiElements.taskDescriptionInput.value.trim(),
-        uiElements.taskDueDateInput.value,
-        uiElements.taskPriorityInput.value,
-        false,
-      );
+      getActiveProject().addTodo({
+        title: uiElements.taskTitleInput.value.trim(),
+        description: uiElements.taskDescriptionInput.value.trim(),
+        dueDate: uiElements.taskDueDateInput.value,
+        priority: uiElements.taskPriorityInput.value,
+        status: false
+      });
     }
 
     saveProjects();
