@@ -1,6 +1,6 @@
-import Project, { addProject, clearProjects, getProjectList } from "./project.js";
+import Project, { addProject, clearProjects, getProjectList } from './project.js';
 
-const STORAGE_KEY = "todo-list-projects";
+const STORAGE_KEY = 'todo-list-projects';
 
 export const saveProjects = () => {
   const data = getProjectList().map(project => ({

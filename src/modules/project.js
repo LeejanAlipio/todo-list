@@ -1,4 +1,4 @@
-import Todo from "./todo.js";
+import Todo from './todo.js';
 
 const projectList = [];
 
@@ -10,7 +10,7 @@ export const clearProjects = () => {
 
 export const createDefaultProject = () => {
   if (projectList.length === 0) {
-    const defaultProject = new Project("Default", "Default Project");
+    const defaultProject = new Project('Default', 'Default Project');
     addProject(defaultProject);
     return defaultProject;
   }
@@ -24,7 +24,7 @@ export const addProject = (project) => {
 };
 
 export default class Project {
-  constructor(name, description = "") {
+  constructor(name, description = '') {
     this.name = name;
     this.description = description;
     this.projectTasks = [];
