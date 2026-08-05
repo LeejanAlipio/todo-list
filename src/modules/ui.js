@@ -171,11 +171,21 @@ export const renderTasks = () => {
 };
 
 export const updateStats = () => {
-  const projectTasks = getActiveProject().getProjectTasks();
+  const activeProject = getActiveProject();
+  if (!activeProject) {
+    uiElements.taskNumber.textContent = '0';
+    uiElements.completedNumber.textContent = '0';
+    uiElements.inProgressNumber.textContent = '0';
+    return;
+  }
 
-  uiElements.taskNumber.textContent = projectTasks.filter(task => !task.status).length;
-  uiElements.completedNumber.textContent = projectTasks.filter(task => task.status).length;
-  uiElements.inProgressNumber.textContent = projectTasks.filter(task => !task.status).length;
+  const projectTasks = activeProject.getProjectTasks() || [];
+  const completed = projectTasks.filter(task => task.status).length;
+  const pending = projectTasks.length - completed;
+
+  uiElements.taskNumber.textContent = String(pending);
+  uiElements.completedNumber.textContent = String(completed);
+  uiElements.inProgressNumber.textContent = String(pending);
 };
 
 export const bindUiActions = () => {
