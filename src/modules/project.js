@@ -1,65 +1,30 @@
 import Todo from "./todo.js";
 
-const STORAGE_KEY = 'todo-list-projects';
 const projectList = [];
 
 export const getProjectList = () => [...projectList];
 
-export const saveProjects = () => {
-  const data = projectList.map(project => ({
-    name: project.name,
-    description: project.description,
-    projectTasks: project.projectTasks.map(task => ({
-      title: task.title,
-      description: task.description,
-      dueDate: task.dueDate,
-      priority: task.priority,
-      status: task.status,
-      id: task.id,
-    })),
-  }));
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-};
-
-export const loadProjects = () => {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return false;
-
-  try {
-    const data = JSON.parse(raw);
-
-    if (!Array.isArray(data) || data.length === 0) {
-      return false;
-    }
-
-    data.forEach((projectData) => {
-      const project = new Project(projectData.name, projectData.description);
-      projectData.projectTasks?.forEach((taskData) => {
-        project.addTodo(taskData);
-      });
-      projectList.push(project);
-    });
-
-    return true;
-  } catch {
-    return false;
-  }
+export const clearProjects = () => {
+  projectList.length = 0;
 };
 
 export const createDefaultProject = () => {
   if (projectList.length === 0) {
     const defaultProject = new Project("Default", "Default Project");
-    projectList.push(defaultProject);
+    addProject(defaultProject);
+    return defaultProject;
   }
+
+  return projectList[0];
 };
 
 export const addProject = (project) => {
   projectList.push(project);
+  return project;
 };
 
 export default class Project {
-  constructor(name, description = '') {
+  constructor(name, description = "") {
     this.name = name;
     this.description = description;
     this.projectTasks = [];
