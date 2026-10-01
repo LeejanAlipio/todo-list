@@ -7,11 +7,11 @@ export default class Todo {
     this.status = status;
     this.id = id || crypto.randomUUID();
   }
-
+  
   toggleStatus() {
     this.status = !this.status;
   }
-
+  
   togglePriority(priority) {
     this.priority = priority;
   }
