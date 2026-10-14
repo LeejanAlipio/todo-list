@@ -29,7 +29,7 @@ export const loadProjects = () => {
     const data = JSON.parse(raw);
 
     if (!Array.isArray(data) || data.length === 0) {
-      return false;
+      throw new Error('Data is not an array or it is empty');
     }
 
     clearProjects();
@@ -43,7 +43,8 @@ export const loadProjects = () => {
     });
 
     return true;
-  } catch {
+  } catch (error) { 
+    console.error(error);
     return false;
   }
 };
