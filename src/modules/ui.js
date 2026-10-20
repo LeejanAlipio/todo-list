@@ -1,9 +1,10 @@
-import '../styles.css';
-import Project, { getProjectList, createDefaultProject, addProject } from './project.js';
-import { saveProjects, loadProjects } from './storage.js';
+import "../styles.css";
+import Project from "./project.js";
+import { saveProjects, loadProjects } from "./storage.js";
+import { projectManager } from "./project-manager.js";
 
 if (!loadProjects()) {
-  createDefaultProject();
+  projectManager.createDefaultProject();
 }
 
 const state = {
@@ -11,7 +12,8 @@ const state = {
   taskBeingEdited: null,
 };
 
-const getActiveProject = () => state.activeProject || getProjectList()[0];
+const getActiveProject = () =>
+  state.activeProject || projectManager.getProjectList()[0];
 
 const setActiveProject = (project) => {
   state.activeProject = project;
@@ -21,47 +23,47 @@ const setActiveProject = (project) => {
 };
 
 const uiElements = {
-  taskDialog: document.querySelector('.task-dialog'),
-  taskForm: document.querySelector('#task-form'),
-  taskTitleInput: document.querySelector('#title'),
-  taskDescriptionInput: document.querySelector('#description'),
-  taskDueDateInput: document.querySelector('#due-date'),
-  taskPriorityInput: document.querySelector('#priority'),
-  projectDialog: document.querySelector('.project-dialog'),
-  projectForm: document.querySelector('#project-form'),
-  projectNameInput: document.querySelector('#project-name'),
-  projectDescriptionInput: document.querySelector('#project-description'),
-  projectList: document.querySelector('#project-list'),
-  taskNumber: document.querySelector('.task-number'),
-  completedNumber: document.querySelector('.completed-number'),
-  inProgressNumber: document.querySelector('.in-progress-number'),
-  contentTasks: document.querySelector('.content-tasks'),
+  taskDialog: document.querySelector(".task-dialog"),
+  taskForm: document.querySelector("#task-form"),
+  taskTitleInput: document.querySelector("#title"),
+  taskDescriptionInput: document.querySelector("#description"),
+  taskDueDateInput: document.querySelector("#due-date"),
+  taskPriorityInput: document.querySelector("#priority"),
+  projectDialog: document.querySelector(".project-dialog"),
+  projectForm: document.querySelector("#project-form"),
+  projectNameInput: document.querySelector("#project-name"),
+  projectDescriptionInput: document.querySelector("#project-description"),
+  projectList: document.querySelector("#project-list"),
+  taskNumber: document.querySelector(".task-number"),
+  completedNumber: document.querySelector(".completed-number"),
+  inProgressNumber: document.querySelector(".in-progress-number"),
+  contentTasks: document.querySelector(".content-tasks"),
 };
 
 const uiActions = {
-  addProjectBtn: document.querySelector('.add-project-btn'),
-  addTaskBtn: document.querySelector('.add-task-btn'),
-  cancelTaskBtn: document.querySelector('.task-dialog .cancel-btn'),
-  cancelProjectBtn: document.querySelector('.project-dialog .cancel-btn'),
+  addProjectBtn: document.querySelector(".add-project-btn"),
+  addTaskBtn: document.querySelector(".add-task-btn"),
+  cancelTaskBtn: document.querySelector(".task-dialog .cancel-btn"),
+  cancelProjectBtn: document.querySelector(".project-dialog .cancel-btn"),
 };
 
 export const renderProjects = () => {
-  uiElements.projectList.innerHTML = '';
+  uiElements.projectList.innerHTML = "";
 
-  getProjectList().forEach(projectData => {
-    const projectItem = document.createElement('li');
-    projectItem.classList.add('project-item');
+  projectManager.getProjectList().forEach((projectData) => {
+    const projectItem = document.createElement("li");
+    projectItem.classList.add("project-item");
 
-    const projectButton = document.createElement('button');
-    projectButton.classList.add('project-name-btn');
-    projectButton.type = 'button';
+    const projectButton = document.createElement("button");
+    projectButton.classList.add("project-name-btn");
+    projectButton.type = "button";
     projectButton.textContent = projectData.name;
-    projectButton.addEventListener('click', () => {
+    projectButton.addEventListener("click", () => {
       setActiveProject(projectData);
     });
 
     if (getActiveProject() === projectData) {
-      projectItem.classList.add('active');
+      projectItem.classList.add("active");
     }
 
     projectItem.appendChild(projectButton);
@@ -72,63 +74,63 @@ export const renderProjects = () => {
 export const renderTasks = () => {
   const activeProject = getActiveProject();
 
-  uiElements.contentTasks.innerHTML = '';
+  uiElements.contentTasks.innerHTML = "";
 
   if (!activeProject) {
-    const emptyState = document.createElement('p');
-    emptyState.textContent = 'No project available.';
+    const emptyState = document.createElement("p");
+    emptyState.textContent = "No project available.";
     uiElements.contentTasks.appendChild(emptyState);
     return;
   }
 
   const projectTasks = activeProject.getProjectTasks();
 
-  projectTasks.forEach(task => {
-    const taskCard = document.createElement('div');
-    taskCard.classList.add('task-card');
-    taskCard.classList.toggle('finish-task', task.status);
+  projectTasks.forEach((task) => {
+    const taskCard = document.createElement("div");
+    taskCard.classList.add("task-card");
+    taskCard.classList.toggle("finish-task", task.status);
 
-    const taskContainer = document.createElement('div');
-    taskContainer.classList.add('task-container');
+    const taskContainer = document.createElement("div");
+    taskContainer.classList.add("task-container");
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
     checkbox.checked = task.status;
-    checkbox.classList.add('checkbox');
-    checkbox.addEventListener('change', () => {
+    checkbox.classList.add("checkbox");
+    checkbox.addEventListener("change", () => {
       task.toggleStatus();
       saveProjects();
       renderTasks();
       updateStats();
     });
 
-    const taskInfo = document.createElement('div');
-    taskInfo.classList.add('task-info');
+    const taskInfo = document.createElement("div");
+    taskInfo.classList.add("task-info");
 
-    const taskInfoHeader = document.createElement('div');
-    taskInfoHeader.classList.add('task-info-header');
+    const taskInfoHeader = document.createElement("div");
+    taskInfoHeader.classList.add("task-info-header");
 
-    const title = document.createElement('p');
+    const title = document.createElement("p");
     title.textContent = task.title;
-    title.classList.add('title');
+    title.classList.add("title");
 
-    const priority = document.createElement('span');
+    const priority = document.createElement("span");
     priority.textContent = task.priority;
     switch (priority.textContent.toLowerCase()) {
-    case 'low':
-      priority.classList.add('priority', 'low-priority');
-      break;
-    case 'medium':
-      priority.classList.add('priority', 'medium-priority');
-      break;
-    case 'high':
-      priority.classList.add('priority', 'high-priority');
-      break;
+      case "low":
+        priority.classList.add("priority", "low-priority");
+        break;
+      case "medium":
+        priority.classList.add("priority", "medium-priority");
+        break;
+      case "high":
+        priority.classList.add("priority", "high-priority");
+        break;
     }
 
-    const dueDate = document.createElement('p');
+    const dueDate = document.createElement("p");
     dueDate.textContent = task.dueDate;
-    dueDate.classList.add('due-date');
+    dueDate.classList.add("due-date");
 
     taskInfoHeader.append(title, priority);
 
@@ -136,27 +138,27 @@ export const renderTasks = () => {
 
     taskContainer.append(checkbox, taskInfo);
 
-    const btnContainer = document.createElement('div');
-    btnContainer.classList.add('btn-container');
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("btn-container");
 
-    const editBtn = document.createElement('button');
-    editBtn.textContent = 'Edit';
-    editBtn.classList.add('btn', 'edit-btn');
-    editBtn.type = 'button';
-    editBtn.addEventListener('click', () => {
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.classList.add("btn", "edit-btn");
+    editBtn.type = "button";
+    editBtn.addEventListener("click", () => {
       state.taskBeingEdited = task;
-      uiElements.taskTitleInput.value = task.title || '';
-      uiElements.taskDescriptionInput.value = task.description || '';
-      uiElements.taskDueDateInput.value = task.dueDate || '';
-      uiElements.taskPriorityInput.value = task.priority || 'low';
+      uiElements.taskTitleInput.value = task.title || "";
+      uiElements.taskDescriptionInput.value = task.description || "";
+      uiElements.taskDueDateInput.value = task.dueDate || "";
+      uiElements.taskPriorityInput.value = task.priority || "low";
       uiElements.taskDialog.showModal();
     });
 
-    const delBtn = document.createElement('button');
-    delBtn.textContent = 'Remove';
-    delBtn.classList.add('btn', 'delete-btn');
-    delBtn.type = 'button';
-    delBtn.addEventListener('click', () => {
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Remove";
+    delBtn.classList.add("btn", "delete-btn");
+    delBtn.type = "button";
+    delBtn.addEventListener("click", () => {
       getActiveProject().removeTodo(task.id);
       saveProjects();
       renderTasks();
@@ -173,14 +175,14 @@ export const renderTasks = () => {
 export const updateStats = () => {
   const activeProject = getActiveProject();
   if (!activeProject) {
-    uiElements.taskNumber.textContent = '0';
-    uiElements.completedNumber.textContent = '0';
-    uiElements.inProgressNumber.textContent = '0';
+    uiElements.taskNumber.textContent = "0";
+    uiElements.completedNumber.textContent = "0";
+    uiElements.inProgressNumber.textContent = "0";
     return;
   }
 
   const projectTasks = activeProject.getProjectTasks() || [];
-  const completed = projectTasks.filter(task => task.status).length;
+  const completed = projectTasks.filter((task) => task.status).length;
   const pending = projectTasks.length - completed;
 
   uiElements.taskNumber.textContent = String(pending);
@@ -189,38 +191,44 @@ export const updateStats = () => {
 };
 
 export const bindUiActions = () => {
-  uiActions.addProjectBtn.addEventListener('click', () => {
+  uiActions.addProjectBtn.addEventListener("click", () => {
     uiElements.projectDialog.showModal();
   });
 
-  uiActions.cancelProjectBtn.addEventListener('click', () => {
+  uiActions.cancelProjectBtn.addEventListener("click", () => {
     uiElements.projectDialog.close();
   });
 
-  uiActions.addTaskBtn.addEventListener('click', () => {
+  uiActions.addTaskBtn.addEventListener("click", () => {
     state.taskBeingEdited = null;
     uiElements.taskForm.reset();
     uiElements.taskDialog.showModal();
   });
 
-  uiActions.cancelTaskBtn.addEventListener('click', () => {
+  uiActions.cancelTaskBtn.addEventListener("click", () => {
     state.taskBeingEdited = null;
     uiElements.taskForm.reset();
     uiElements.taskDialog.close();
   });
 
-  uiElements.projectForm.addEventListener('submit', (event) => {
+  uiElements.projectForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const newProject = new Project(
-      uiElements.projectNameInput.value.trim(), 
+      uiElements.projectNameInput.value.trim(),
       uiElements.projectDescriptionInput.value.trim(),
     );
 
-    if (getProjectList().some(project => project.name === newProject.name)) {return;}
+    if (
+      projectManager
+        .getProjectList()
+        .some((project) => project.name === newProject.name)
+    ) {
+      return;
+    }
 
-    addProject(newProject);
+    projectManager.addProject(newProject);
     saveProjects();
-    
+
     state.activeProject = newProject;
 
     renderProjects();
@@ -231,12 +239,13 @@ export const bindUiActions = () => {
     uiElements.projectDialog.close();
   });
 
-  uiElements.taskForm.addEventListener('submit', (event) => {
+  uiElements.taskForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     if (state.taskBeingEdited) {
       state.taskBeingEdited.title = uiElements.taskTitleInput.value.trim();
-      state.taskBeingEdited.description = uiElements.taskDescriptionInput.value.trim();
+      state.taskBeingEdited.description =
+        uiElements.taskDescriptionInput.value.trim();
       state.taskBeingEdited.dueDate = uiElements.taskDueDateInput.value;
       state.taskBeingEdited.priority = uiElements.taskPriorityInput.value;
       state.taskBeingEdited = null;

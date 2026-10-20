@@ -1,9 +1,10 @@
-import Project, { addProject, clearProjects, getProjectList } from './project.js';
+import Project from './project.js';
+import { projectManager } from './project-manager.js';
 
 const STORAGE_KEY = 'todo-list-projects';
 
 export const saveProjects = () => {
-  const data = getProjectList().map(project => ({
+  const data = projectManager.getProjectList().map(project => ({
     name: project.name,
     description: project.description,
     projectTasks: project.projectTasks.map(task => ({
@@ -32,14 +33,14 @@ export const loadProjects = () => {
       throw new Error('Data is not an array or it is empty');
     }
 
-    clearProjects();
+    projectManager.clearProjects();
 
     data.forEach((projectData) => {
       const project = new Project(projectData.name, projectData.description);
       projectData.projectTasks?.forEach((taskData) => {
         project.addTodo(taskData);
       });
-      addProject(project);
+      projectManager.addProject(project);
     });
 
     return true;
