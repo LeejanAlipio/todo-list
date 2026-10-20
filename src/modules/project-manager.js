@@ -18,7 +18,7 @@ class ProjectManager {
   }
 
   createDefaultProject() {
-    if (this.projectList.lenght === 0) {
+    if (this.projectList.length === 0) {
       const defaultProject = new Project('Default', 'Default Project');
       this.projectList.push(defaultProject);
     }
